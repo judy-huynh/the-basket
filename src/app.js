@@ -169,7 +169,11 @@ function init(data) {
     if (bar && !bar.dataset.err) { bar.dataset.err = '1'; bar.insertAdjacentHTML('beforeend', `<span style="color:var(--s26)">map: ${msg}</span>`); }
   });
 
-  map.on('load', () => {
+  // 'style.load', not 'load'. The 'load' event waits for a completed render
+  // pass, and browsers suspend requestAnimationFrame in background tabs, so a
+  // page opened in a background tab would reach the foreground with a basemap
+  // and no store data on it. 'style.load' only needs the style parsed.
+  map.on('style.load', () => {
     map.addSource('stores', {
       type: 'geojson',
       data: { type: 'FeatureCollection', features: DATA.stores.map((s) => ({
