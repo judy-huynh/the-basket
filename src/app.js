@@ -138,12 +138,36 @@ function init(data) {
   DATA = data;
   $('#gen').textContent = `Data rebuilt ${data.generated}. BLS series current to ${data.items[0].latest_period}.`;
 
+  // Everything below this point works without the map, so render it first.
+  // A basemap that fails to load should cost you the map, not the whole page.
+  renderStats(); renderItems();
+
+  // An inline raster style, deliberately. The hosted vector styles pull a
+  // sprite sheet and a glyph server, and if either stalls the map never fires
+  // 'load' and every layer silently goes missing. Raster tiles have no such
+  // dependencies.
+  const basemap = isDark() ? 'dark_all' : 'light_all';
   map = new maplibregl.Map({
     container: 'map',
-    style: `https://basemaps.cartocdn.com/gl/${isDark() ? 'dark-matter' : 'positron'}-gl-style/style.json`,
+    style: {
+      version: 8,
+      sources: { base: {
+        type: 'raster',
+        tiles: ['a', 'b', 'c'].map((s) => `https://${s}.basemaps.cartocdn.com/${basemap}/{z}/{x}/{y}{ratio}.png`.replace('{ratio}', devicePixelRatio > 1 ? '@2x' : '')),
+        tileSize: 256,
+        attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      } },
+      layers: [{ id: 'base', type: 'raster', source: 'base' }],
+    },
     center: [-73.94, 40.72], zoom: 10.1, attributionControl: true,
   });
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+
+  map.on('error', (e) => {
+    const msg = (e && e.error && e.error.message) || 'unknown map error';
+    const bar = document.querySelector('.legend');
+    if (bar && !bar.dataset.err) { bar.dataset.err = '1'; bar.insertAdjacentHTML('beforeend', `<span style="color:var(--s26)">map: ${msg}</span>`); }
+  });
 
   map.on('load', () => {
     map.addSource('stores', {
@@ -162,7 +186,7 @@ function init(data) {
       paint: { 'circle-radius': 9, 'circle-color': 'transparent',
                'circle-stroke-width': 2.5, 'circle-stroke-color': isDark() ? '#EDEFF2' : '#15181C' } });
 
-    paint(); renderStats(); renderItems();
+    paint();
 
     const pop = new maplibregl.Popup({ closeButton: false, offset: 12 });
     map.on('mouseenter', 'stores', (e) => {
