@@ -54,7 +54,7 @@ header{border-bottom:1px solid var(--rule);background:var(--panel)}
 
 .app{display:grid;grid-template-columns:1fr 348px;gap:18px;padding-bottom:34px}
 .mapwrap{border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
-#map{height:620px;width:100%}
+#map{height:620px;width:100%;position:relative}
 .bar{display:flex;gap:8px;padding:11px 13px;border-bottom:1px solid var(--rule);align-items:center;flex-wrap:wrap}
 .seg{display:inline-flex;background:var(--sunk);border:1px solid var(--rule);border-radius:5px;padding:2px;gap:2px}
 .seg button{appearance:none;border:0;background:transparent;color:var(--ink-2);font:inherit;font-size:13px;font-weight:600;padding:6px 12px;border-radius:3px;cursor:pointer}

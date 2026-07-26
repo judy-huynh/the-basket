@@ -163,6 +163,25 @@ function init(data) {
   });
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
 
+  // A map that fails should say so. Without this the container is just a white
+  // rectangle and there is no way to tell a stalled basemap from a code error.
+  let painted = false;
+  map.on('idle', () => { painted = true; });
+  setTimeout(() => {
+    if (painted) return;
+    const why = document.hidden
+      ? 'This tab was in the background while the page loaded, so the browser paused rendering. Reload with the tab in front.'
+      : 'The basemap tiles did not finish loading. The store data below is unaffected.';
+    const el = document.getElementById('map');
+    if (el && !el.dataset.warned) {
+      el.dataset.warned = '1';
+      el.insertAdjacentHTML('afterbegin',
+        `<div style="position:absolute;inset:12px;z-index:2;background:var(--panel);border:1px solid var(--rule);
+          border-radius:5px;padding:16px;font-size:13.5px;color:var(--ink-2);max-width:420px;height:max-content">
+          <b style="color:var(--ink)">The map did not draw.</b><br>${why}</div>`);
+    }
+  }, 9000);
+
   map.on('error', (e) => {
     const msg = (e && e.error && e.error.message) || 'unknown map error';
     const bar = document.querySelector('.legend');
