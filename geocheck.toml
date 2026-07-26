@@ -1,0 +1,6 @@
+# Expectations for The Basket.
+# data/basket.json is a derived data file, not GeoJSON, so the structural
+# geometry checks do not apply. The value here is the trap scan over source.
+
+[traps]
+paths = ["src", "scripts", "index.html", "README.md"]

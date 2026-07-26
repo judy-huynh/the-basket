@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Basket: what the same 10 groceries cost across New York City</title>
+<meta name="description" content="Store-level grocery basket prices for 163 New York City supermarkets, measured in 2019 and projected forward with official BLS price data.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129506;</text></svg>">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+<header><div class="hd">
+  <span class="wm">The Basket</span>
+  <span class="tag">10 groceries, 163 New York City supermarkets</span>
+  <nav><a href="#method">Method</a><a href="#limits">Limits</a><a href="#data">Data</a></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="intro">
+    <h1>The same ten groceries, priced store by store.</h1>
+    <p>In 2019 the New York City Health Department sent staff into 163 supermarkets and wrote down the price of ten ordinary items. This maps that survey, projects each item forward using official federal price data, and works out whether splitting your shop between nearby stores is worth the walk.</p>
+    <div class="warn"><b>Read this first.</b> The 2019 prices were measured. The 2026 prices were <b>not</b>. They are the 2019 prices multiplied by the national change in each item's average price, and no store on this map has been re-visited. Treat them as a price geography, not as today's shelf price.</div>
+  </div>
+
+  <div class="app">
+    <div class="mapwrap">
+      <div class="bar">
+        <div class="seg" role="group" aria-label="Which prices to show">
+          <button type="button" data-v="b19" aria-pressed="false">2019 measured</button>
+          <button type="button" data-v="b26" aria-pressed="true">2026 projected</button>
+          <button type="button" data-v="diff" aria-pressed="false">Increase</button>
+        </div>
+        <span class="hint">Click the map to set where you shop from</span>
+      </div>
+      <div id="map"></div>
+      <div class="legend">
+        <span id="lo">&nbsp;</span>
+        <span class="ramp" aria-hidden="true"><i style="background:var(--r1)"></i><i style="background:var(--r2)"></i><i style="background:var(--r3)"></i><i style="background:var(--r4)"></i><i style="background:var(--r5)"></i></span>
+        <span id="hi">&nbsp;</span>
+        <span id="cap"></span>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="card">
+        <h3>Shopping from a point</h3>
+        <div class="csub">Click the map, or start from a neighborhood.</div>
+        <div class="presets" id="presets"></div>
+        <div id="near"><div class="empty">No location set. Surveyed stores within a 15 minute walk will appear here, with the cheapest way to split the list between them.</div></div>
+      </div>
+      <div class="card">
+        <h3>Across the sample</h3>
+        <div class="csub">163 surveyed supermarkets</div>
+        <div id="stats"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="doc" id="method">
+    <h2>How the numbers were made</h2>
+    <div class="grid2">
+      <div>
+        <ol>
+          <li><b>2019 is measured.</b> NYC DOHMH staff visited 163 supermarkets between March and August 2019 and recorded the price of ten specified items.</li>
+          <li><b>2026 is projected.</b> Each item is multiplied by the change in its matching US Bureau of Labor Statistics average price series, from the March-August 2019 survey window to the latest published month.</li>
+          <li><b>The series are matched to the product spec.</b> The survey priced 90% lean ground beef and whole wheat bread, so the projection uses the lean beef and whole wheat series, not the generic ones. Using the generic series overstates the basket by several percent.</li>
+          <li><b>Missing prices were imputed by DOHMH</b> using multiple imputation. 5.4% of item prices are imputed, and 33% of stores have at least one.</li>
+        </ol>
+      </div>
+      <div>
+        <h3 style="font-size:15px;margin-bottom:8px">Item specifications and factors</h3>
+        <div class="scroll"><table id="items"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" id="limits">
+    <h2>What this cannot tell you</h2>
+    <ul>
+      <li><b>It is not a current price.</b> No store here has been visited since 2019.</li>
+      <li><b>The sample is purposive, not representative.</b> DOHMH chose stores by public transport accessibility and deliberately oversampled gentrifying neighborhoods. Borough figures describe the sample, not the borough.</li>
+      <li><b>163 stores out of 11,472</b> licensed food retailers in the city. Whole neighborhoods have no dot.</li>
+      <li><b>Bodegas and delis are excluded</b> entirely, and many New Yorkers shop in them.</li>
+      <li><b>The projection assumes every store raised prices at the national rate</b> for each item. That is certainly false at the individual store level. It is a comparison baseline, not a forecast.</li>
+      <li><b>One item is not spec matched.</b> The survey priced 1% milk by the half gallon; BLS publishes no low fat series, so whole milk per gallon stands in for the rate of change.</li>
+      <li><b>Three items are not comparable across stores.</b> Where the preferred product was unavailable, surveyors recorded an alternative. That happened for 94% of orange records, 23% of lettuce and 18% of tomato, so per-item comparisons for those three mix different products.</li>
+    </ul>
+  </section>
+
+  <section class="doc" id="data">
+    <h2>Data</h2>
+    <p style="color:var(--ink-2);max-width:76ch">Everything here rebuilds from two public sources with one command and no API key. <code>python3 scripts/build_data.py</code> refetches the survey and the current BLS series and rewrites the file below.</p>
+    <a class="dl" href="data/basket.json" download>Download basket.json</a>
+    <ul style="margin-top:18px">
+      <li>Price survey: <a href="https://github.com/nychealth/food-pricing-survey-nyc-2019">nychealth/food-pricing-survey-nyc-2019</a>, published with the <em>Data in Brief</em> article by Crossa, Cooperman, James, Ma and Baquero (2023).</li>
+      <li>Price change: <a href="https://www.bls.gov/cpi/">US Bureau of Labor Statistics</a> average price series, via the public API.</li>
+      <li>Prior work on this survey: the <a href="https://sites.google.com/view/feed-nyc/food-affordability">FEED-NYC dashboard</a> from the CUNY Urban Food Policy Institute maps the same 2019 data by community district.</li>
+    </ul>
+  </section>
+</div>
+
+<footer><div class="wrap">
+  <p>Built with MapLibre GL and CARTO basemaps. Code and derived data released under the MIT licence. Source data belongs to NYC DOHMH and the US BLS.</p>
+  <p id="gen"></p>
+</div></footer>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>
