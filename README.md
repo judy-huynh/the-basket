@@ -4,6 +4,8 @@
 
 Live: https://judy-huynh.github.io/the-basket/
 
+![163 NYC supermarkets shaded by projected basket price](img/preview.png)
+
 In 2019 the NYC Department of Health and Mental Hygiene sent staff into 163
 supermarkets and wrote down the price of ten ordinary items. This maps that
 survey at store level, projects each item forward using the matching federal
