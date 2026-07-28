@@ -7,13 +7,13 @@
 <meta name="description" content="Store-level grocery basket prices for 163 New York City supermarkets, measured in 2019 and projected forward with official BLS price data.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129506;</text></svg>">
 <link rel="stylesheet" href="src/vendor/maplibre-gl.css">
-<link rel="stylesheet" href="src/styles.css?v=20260727225049">
+<link rel="stylesheet" href="src/styles.css?v=20260727232615">
 </head>
 <body>
 <header><div class="hd">
   <span class="wm">The Basket</span>
   <span class="tag">10 groceries, 163 New York City supermarkets</span>
-  <nav><a href="#method">Method</a><a href="#limits">Limits</a><a href="#data">Data</a><a href="collect/"><b>Price a store</b></a></nav>
+  <nav><a href="#method">Method</a><a href="#limits">Limits</a><a href="#data">Data</a><a href="#transparency">Transparency</a><a href="collect/"><b>Price a store</b></a></nav>
 </div></header>
 
 <div class="wrap">
@@ -90,6 +90,16 @@
     </ul>
   </section>
 
+  <section class="doc" id="transparency">
+    <h2>Who can check a price before they shop</h2>
+    <p class="sub">A companion question, and a starker one. Not what groceries cost, but whether the price is knowable at all without walking in. New York licenses <b>11,472 food retailers</b>. Only <b>13%</b> belong to a chain of three or more locations, and <b>83%</b> carry a name used at exactly one address. A single-location store has no catalogue to publish.</p>
+    <p class="sub">That upper bound is not evenly distributed. Across 163 ZIP codes, chain share correlates <b>-0.55</b> with the share of households that are rent burdened and <b>-0.49</b> with SNAP enrolment. Comparison shopping is a middle-class affordance: if you can check three stores from your couch you can arbitrage them, and if none of your stores publish anything your only option is to walk.</p>
+    <figure style="margin:20px 0 0">
+      <img src="img/transparency.png" alt="Map of New York City ZIP codes shaded by the share of food retailers belonging to a chain" style="width:100%;height:auto;border:1px solid var(--rule);border-radius:6px">
+    </figure>
+    <a class="dl" href="docs/price-transparency.md">Read the method, including what failed</a>
+  </section>
+
   <section class="doc" id="contribute">
     <h2>Help re-measure it</h2>
     <p class="sub">Every price here traces back to one week of fieldwork in 2019. The projection exists only because nobody has been back. If you shop somewhere on this map, or somewhere that should be, you can price the same ten items in about ten minutes.</p>
@@ -115,6 +125,6 @@
 </div></footer>
 
 <script src="src/vendor/maplibre-gl.js"></script>
-<script src="src/app.js?v=20260727225049"></script>
+<script src="src/app.js?v=20260727232615"></script>
 </body>
 </html>

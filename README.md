@@ -17,6 +17,24 @@ splitting a list across five nearby supermarkets saves about $205 a year over
 the cheapest single store. In Hell's Kitchen it saves nothing, because one store
 is cheaper on almost everything.
 
+## Companion analysis: who can check a price at all
+
+New York licenses **11,472 food retailers**. Only **13%** belong to a chain of
+three or more locations, and **83%** carry a name used at exactly one address. A
+single-location store has no catalogue to publish, so chain membership is an
+upper bound on who could possibly check a price online.
+
+That bound is not evenly distributed. Across 163 ZIP codes chain share correlates
+**&minus;0.55** with rent burden and **&minus;0.49** with SNAP enrolment, and the
+relationship holds from &minus;0.51 to &minus;0.62 as the minimum-store floor is
+raised. Comparison shopping is a middle-class affordance.
+
+![Who can check a price before they shop](img/transparency.png)
+
+See [docs/price-transparency.md](docs/price-transparency.md) for the method,
+including the three ways automated classification of retailer websites produced
+confidently wrong answers.
+
 ## The one thing to understand before reading any number
 
 **2019 prices are measured. 2026 prices are not.**
