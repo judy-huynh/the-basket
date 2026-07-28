@@ -22,12 +22,12 @@
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129506;</text></svg>">
 <link rel="stylesheet" href="src/vendor/maplibre-gl.css">
-<link rel="stylesheet" href="src/styles.css?v=20260728131559">
+<link rel="stylesheet" href="src/styles.css?v=20260728131909">
 </head>
 <body>
 <header><div class="hd">
   <span class="wm">The Basket</span>
-  <span class="tag">10 groceries, 163 New York City supermarkets</span>
+  <span class="tag">Price transparency and grocery costs in New York City</span>
   <nav><a href="#prices">Prices</a><a href="#method">Method</a><a href="#limits">Limits</a><a href="#data">Data</a><a href="collect/"><b>Price a store</b></a></nav>
 </div></header>
 
@@ -39,11 +39,11 @@
   </div>
 
 <section class="doc" id="transparency">
-    <h2>Who can check a price before they shop</h2>
-    <p class="sub">A companion question, and a starker one. Not what groceries cost, but whether the price is knowable at all without walking in. New York licenses <b>11,472 food retailers</b>. Only <b>13%</b> belong to a chain of three or more locations, and <b>83%</b> carry a name used at exactly one address. A single-location store has no catalogue to publish.</p>
-    <p class="sub">That upper bound is not evenly distributed. Across 163 ZIP codes, chain share correlates <b>-0.55</b> with the share of households that are rent burdened and <b>-0.49</b> with SNAP enrolment. Comparison shopping is a middle-class affordance: if you can check three stores from your couch you can arbitrage them, and if none of your stores publish anything your only option is to walk.</p>
+    <h2>The map of who is allowed to know</h2>
+    <p class="sub">A store can only publish prices if it has the infrastructure to do so, and in practice that means belonging to a chain. <b>83%</b> of the city's licensed food retailers carry a name used at exactly one address. There is no catalogue behind a bodega, so chain membership sets an upper bound on who could possibly check a price online.</p>
+    <p class="sub">That bound runs from <b>3%</b> of retailers in Hunts Point and Sunset Park to <b>69%</b> in Tribeca. Across 163 ZIP codes it correlates &minus;0.55 with rent burden and &minus;0.49 with SNAP enrolment, and the relationship holds between &minus;0.51 and &minus;0.62 as the minimum-store threshold is raised, so it is not an artifact of small areas.</p>
     <figure style="margin:20px 0 0">
-      <img src="img/transparency.png" alt="Map of New York City ZIP codes shaded by the share of food retailers belonging to a chain" style="width:100%;height:auto;border:1px solid var(--rule);border-radius:6px">
+      <img src="img/transparency.png" alt="Map of New York City ZIP codes shaded by the share of food retailers belonging to a chain. Manhattan is darkest, Brooklyn and Queens are palest." style="width:100%;height:auto;border:1px solid var(--rule);border-radius:6px" loading="lazy" width="1343" height="1400">
     </figure>
     <a class="dl" href="docs/price-transparency.md">Read the method, including what failed</a>
   </section>
@@ -147,6 +147,6 @@
 </div></footer>
 
 <script src="src/vendor/maplibre-gl.js"></script>
-<script src="src/app.js?v=20260728131559"></script>
+<script src="src/app.js?v=20260728131909"></script>
 </body>
 </html>
