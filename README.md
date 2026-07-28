@@ -1,39 +1,28 @@
 # The Basket
 
-**What the same ten groceries cost across New York City, store by store.**
+**Who can find out what food costs in New York?**
 
 Live: https://judy-huynh.github.io/the-basket/
 
-![163 NYC supermarkets shaded by projected basket price](img/preview.png)
+Not what groceries cost. Whether the price is knowable at all before you walk in.
 
-In 2019 the NYC Department of Health and Mental Hygiene sent staff into 163
-supermarkets and wrote down the price of ten ordinary items. This maps that
-survey at store level, projects each item forward using the matching federal
-price series, and answers a question New Yorkers already solve by hand: is
-splitting your shop between nearby stores actually worth the walk?
+New York licenses **11,472 food retailers**. Only **13%** belong to a chain with
+the infrastructure to publish a price, and **83%** carry a name used at exactly
+one address. That share tracks rent burden at **&minus;0.55** and SNAP enrolment
+at **&minus;0.49** across 163 ZIP codes, holding from &minus;0.51 to &minus;0.62
+as the small-ZIP floor is raised.
 
-The answer turns out to depend on where you are. Around Jackson Heights,
-splitting a list across five nearby supermarkets saves about $205 a year over
-the cheapest single store. In Hell's Kitchen it saves nothing, because one store
-is cheaper on almost everything.
-
-## Companion analysis: who can check a price at all
-
-New York licenses **11,472 food retailers**. Only **13%** belong to a chain of
-three or more locations, and **83%** carry a name used at exactly one address. A
-single-location store has no catalogue to publish, so chain membership is an
-upper bound on who could possibly check a price online.
-
-That bound is not evenly distributed. Across 163 ZIP codes chain share correlates
-**&minus;0.55** with rent burden and **&minus;0.49** with SNAP enrolment, and the
-relationship holds from &minus;0.51 to &minus;0.62 as the minimum-store floor is
-raised. Comparison shopping is a middle-class affordance.
+Comparison shopping is a middle-class affordance. If you can check three stores
+from your couch you can arbitrage them. If none of your stores publish anything,
+your only option is to walk.
 
 ![Who can check a price before they shop](img/transparency.png)
 
 See [docs/price-transparency.md](docs/price-transparency.md) for the method,
 including the three ways automated classification of retailer websites produced
 confidently wrong answers.
+
+## Underneath that: the only store-level prices the city has
 
 ## The one thing to understand before reading any number
 

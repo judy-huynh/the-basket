@@ -61,4 +61,11 @@ ax.text(0, -0.035, "2019 prices measured by NYC DOHMH, projected with BLS averag
 
 fig.tight_layout()
 fig.savefig(OUT, facecolor=PAPER, bbox_inches="tight")
+# Maps are flat colour plus text, so a 256-entry adaptive palette is visually
+# identical to truecolour and roughly a third the bytes.
+from PIL import Image
+_im = Image.open(OUT).convert("RGB")
+_im.thumbnail((1400, 1400), Image.LANCZOS)
+_im.quantize(colors=256, method=Image.MEDIANCUT, dither=Image.FLOYDSTEINBERG).save(OUT, optimize=True)
+
 print(f"wrote {OUT}")

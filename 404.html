@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Not found: The Basket</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129506;</text></svg>">
+<style>
+/* Styles are inline on purpose. GitHub Pages serves this file for any missing
+   path, so a relative stylesheet link resolves against the wrong directory and
+   the page arrives unstyled exactly when someone is already lost. */
+:root{--surface:#FCFBF9;--ink:#15181C;--ink-2:#454C56;--rule:#DFDDD8;--accent:#0B6FBF}
+@media (prefers-color-scheme:dark){:root{--surface:#101318;--ink:#EDEFF2;--ink-2:#A8B0BB;--rule:#2A2F37;--accent:#3A92D8}}
+body{margin:0;background:var(--surface);color:var(--ink);
+  font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.nf{max-width:620px;margin:0 auto;padding:84px 22px}
+h1{font-size:30px;letter-spacing:-.026em;margin:0 0 12px;text-wrap:balance}
+p{color:var(--ink-2);margin:0 0 20px}
+ul{padding-left:19px;margin:0}
+li{margin-bottom:9px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="nf">
+  <h1>That page does not exist.</h1>
+  <p>Nothing is broken. The address just does not match anything here.</p>
+  <ul id="links"></ul>
+</div>
+<script>
+// Work out the site root so these links survive the move to a custom domain.
+// On judy-huynh.github.io the site lives under /the-basket/; on judyhuynh.ca it
+// will live at /. Hard-coding either one breaks the other.
+var base = location.hostname.endsWith('github.io') ? '/' + location.pathname.split('/')[1] + '/' : '/';
+document.getElementById('links').innerHTML = [
+  [base, 'The map and the transparency audit'],
+  [base + 'collect/', 'The field sheet, for pricing a store in person'],
+  [base + 'docs/price-transparency.md', 'How the transparency audit was built'],
+  ['https://github.com/judy-huynh/the-basket', 'The source and the data'],
+].map(function (l) { return '<li><a href="' + l[0] + '">' + l[1] + '</a></li>'; }).join('');
+</script>
+</body>
+</html>

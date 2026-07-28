@@ -3,25 +3,55 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The Basket: what the same 10 groceries cost across New York City</title>
-<meta name="description" content="Store-level grocery basket prices for 163 New York City supermarkets, measured in 2019 and projected forward with official BLS price data.">
+<title>The Basket: who can find out what food costs in New York</title>
+<meta name="description" content="Only 13% of New York's 11,472 licensed food retailers belong to a chain that could publish prices. Chain share correlates -0.55 with rent burden.">
+<link rel="canonical" href="https://judy-huynh.github.io/the-basket/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Basket">
+<meta property="og:url" content="https://judy-huynh.github.io/the-basket/">
+<meta property="og:title" content="Who can find out what food costs in New York">
+<meta property="og:description" content="11,472 licensed food retailers. Only 13% belong to a chain that could publish prices, and the share tracks rent burden at -0.55. Comparison shopping is a middle-class affordance.">
+<meta property="og:image" content="https://judy-huynh.github.io/the-basket/img/social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Map of New York City ZIP codes shaded by the share of food retailers that belong to a chain">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Who can find out what food costs in New York">
+<meta name="twitter:description" content="Only 13% of the city's 11,472 licensed food retailers belong to a chain that could publish prices, and the share tracks rent burden at -0.55.">
+<meta name="twitter:image" content="https://judy-huynh.github.io/the-basket/img/social.png">
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129506;</text></svg>">
 <link rel="stylesheet" href="src/vendor/maplibre-gl.css">
-<link rel="stylesheet" href="src/styles.css?v=20260727232615">
+<link rel="stylesheet" href="src/styles.css?v=20260728131559">
 </head>
 <body>
 <header><div class="hd">
   <span class="wm">The Basket</span>
   <span class="tag">10 groceries, 163 New York City supermarkets</span>
-  <nav><a href="#method">Method</a><a href="#limits">Limits</a><a href="#data">Data</a><a href="#transparency">Transparency</a><a href="collect/"><b>Price a store</b></a></nav>
+  <nav><a href="#prices">Prices</a><a href="#method">Method</a><a href="#limits">Limits</a><a href="#data">Data</a><a href="collect/"><b>Price a store</b></a></nav>
 </div></header>
 
 <div class="wrap">
   <div class="intro">
-    <h1>The same ten groceries, priced store by store.</h1>
-    <p>In 2019 the New York City Health Department sent staff into 163 supermarkets and wrote down the price of ten ordinary items. This maps that survey, projects each item forward using official federal price data, and works out whether splitting your shop between nearby stores is worth the walk.</p>
-    <div class="warn"><b>Read this first.</b> The 2019 prices were measured. The 2026 prices were <b>not</b>. They are the 2019 prices multiplied by the national change in each item's average price, and no store on this map has been re-visited. Treat them as a price geography, not as today's shelf price.</div>
+    <h1>Who can find out what food costs in New York?</h1>
+    <p>Not what groceries cost. Whether the price is knowable at all before you walk in. The city licenses <b>11,472 food retailers</b>, and only <b>13%</b> belong to a chain with the infrastructure to publish a price. That share tracks rent burden at <b>&minus;0.55</b>. The neighbourhoods where people are most cost-burdened are the ones where prices are least visible in advance.</p>
+    <p>Underneath that sits the only store-level price data the city has, a 2019 Health Department survey of 163 supermarkets, mapped here and carried forward. And underneath that, a way to start measuring again.</p>
   </div>
+
+<section class="doc" id="transparency">
+    <h2>Who can check a price before they shop</h2>
+    <p class="sub">A companion question, and a starker one. Not what groceries cost, but whether the price is knowable at all without walking in. New York licenses <b>11,472 food retailers</b>. Only <b>13%</b> belong to a chain of three or more locations, and <b>83%</b> carry a name used at exactly one address. A single-location store has no catalogue to publish.</p>
+    <p class="sub">That upper bound is not evenly distributed. Across 163 ZIP codes, chain share correlates <b>-0.55</b> with the share of households that are rent burdened and <b>-0.49</b> with SNAP enrolment. Comparison shopping is a middle-class affordance: if you can check three stores from your couch you can arbitrage them, and if none of your stores publish anything your only option is to walk.</p>
+    <figure style="margin:20px 0 0">
+      <img src="img/transparency.png" alt="Map of New York City ZIP codes shaded by the share of food retailers belonging to a chain" style="width:100%;height:auto;border:1px solid var(--rule);border-radius:6px">
+    </figure>
+    <a class="dl" href="docs/price-transparency.md">Read the method, including what failed</a>
+  </section>
+
+  <section class="doc" id="prices">
+    <h2>Where prices are known, this is what they were</h2>
+    <p class="sub">163 supermarkets, ten specified items, priced in person by Health Department staff between March and August 2019. Every dot is a store. The 2026 figures are those prices carried forward by the change in each item's federal price series, so they are a projection and not a shelf price.</p>
+  </section>
 
   <div class="app">
     <div class="mapwrap">
@@ -57,7 +87,8 @@
     </div>
   </div>
 
-  <section class="doc" id="method">
+
+<section class="doc" id="method">
     <h2>How the numbers were made</h2>
     <div class="grid2">
       <div>
@@ -76,7 +107,7 @@
     </div>
   </section>
 
-  <section class="doc" id="limits">
+<section class="doc" id="limits">
     <h2>What this cannot tell you</h2>
     <ul>
       <li><b>It is not a current price.</b> No store here has been visited since 2019.</li>
@@ -90,24 +121,14 @@
     </ul>
   </section>
 
-  <section class="doc" id="transparency">
-    <h2>Who can check a price before they shop</h2>
-    <p class="sub">A companion question, and a starker one. Not what groceries cost, but whether the price is knowable at all without walking in. New York licenses <b>11,472 food retailers</b>. Only <b>13%</b> belong to a chain of three or more locations, and <b>83%</b> carry a name used at exactly one address. A single-location store has no catalogue to publish.</p>
-    <p class="sub">That upper bound is not evenly distributed. Across 163 ZIP codes, chain share correlates <b>-0.55</b> with the share of households that are rent burdened and <b>-0.49</b> with SNAP enrolment. Comparison shopping is a middle-class affordance: if you can check three stores from your couch you can arbitrage them, and if none of your stores publish anything your only option is to walk.</p>
-    <figure style="margin:20px 0 0">
-      <img src="img/transparency.png" alt="Map of New York City ZIP codes shaded by the share of food retailers belonging to a chain" style="width:100%;height:auto;border:1px solid var(--rule);border-radius:6px">
-    </figure>
-    <a class="dl" href="docs/price-transparency.md">Read the method, including what failed</a>
-  </section>
-
-  <section class="doc" id="contribute">
+<section class="doc" id="contribute">
     <h2>Help re-measure it</h2>
     <p class="sub">Every price here traces back to one week of fieldwork in 2019. The projection exists only because nobody has been back. If you shop somewhere on this map, or somewhere that should be, you can price the same ten items in about ten minutes.</p>
     <p class="sub">The field sheet uses the survey's own wording, so what you record is comparable to the baseline rather than a separate pile of numbers. Nothing is uploaded and no account is needed. It saves as you go and you export a file at the end.</p>
     <a class="dl" href="collect/">Open the field sheet</a>
   </section>
 
-  <section class="doc" id="data">
+<section class="doc" id="data">
     <h2>Data</h2>
     <p style="color:var(--ink-2);max-width:76ch">Everything here rebuilds from two public sources with one command and no API key. <code>python3 scripts/build_data.py</code> refetches the survey and the current BLS series and rewrites the file below.</p>
     <a class="dl" href="data/basket.json" download>Download basket.json</a>
@@ -117,6 +138,7 @@
       <li>Prior work on this survey: the <a href="https://sites.google.com/view/feed-nyc/food-affordability">FEED-NYC dashboard</a> from the CUNY Urban Food Policy Institute maps the same 2019 data by community district.</li>
     </ul>
   </section>
+
 </div>
 
 <footer><div class="wrap">
@@ -125,6 +147,6 @@
 </div></footer>
 
 <script src="src/vendor/maplibre-gl.js"></script>
-<script src="src/app.js?v=20260727232615"></script>
+<script src="src/app.js?v=20260728131559"></script>
 </body>
 </html>
