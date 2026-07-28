@@ -24,7 +24,11 @@ ok(fc.features.every(f => f.properties.b26 > f.properties.b19), 'every projected
 console.log('\nItem factors:');
 ok(D.items.length === 10, `10 items (${D.items.length})`);
 ok(D.items.every(i => i.factor > 1 && i.factor < 2.5), 'all factors within a sane 1.0-2.5 range');
-ok(D.items.filter(i => !i.spec_match).length === 1, 'exactly 1 item flagged as spec mismatch (milk)');
+// Corrected 2026-07-27 after re-reading the raw survey wording: the survey priced
+// VINE tomatoes (BLS tracks field grown) and a 1 LB CONTAINER of strawberries
+// (BLS tracks a dry pint). Product mismatches are milk and tomato.
+ok(D.items.filter(i => !i.product_match).length === 2, `2 product mismatches, milk and tomato (${D.items.filter(i => !i.product_match).map(i=>i.key).join(', ')})`);
+ok(D.items.filter(i => i.unit_note).length === 5, `5 items carry a unit-basis note (${D.items.filter(i=>i.unit_note).length})`);
 
 console.log('\nBasket arithmetic (sum of items must equal the stored total):');
 const bad19 = D.stores.filter(s => Math.abs(Object.values(s.p19).reduce((a,b)=>a+b,0) - s.b19) > 0.011);

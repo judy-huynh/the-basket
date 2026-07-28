@@ -120,8 +120,13 @@ function renderStats() {
 }
 
 function renderItems() {
-  $('#items').innerHTML = `<thead><tr><th>Item</th><th>As priced</th><th class="n">Change</th></tr></thead><tbody>`
-    + DATA.items.map((i) => `<tr><td>${i.key}${i.spec_match ? '' : ' *'}</td><td>${i.spec}</td>
+  // Two different kinds of imperfection, kept separate on purpose. A different
+  // PRODUCT makes the rate a substitute. A different unit basis usually does not,
+  // because a rate of change survives it. Collapsing them would overstate one and
+  // hide the other.
+  const mark = (i) => !i.product_match ? ' \u2020' : (i.unit_note ? ' *' : '');
+  $('#items').innerHTML = `<thead><tr><th>Item</th><th>As priced in 2019</th><th class="n">Change</th></tr></thead><tbody>`
+    + DATA.items.map((i) => `<tr><td>${i.key}${mark(i)}</td><td>${i.spec}${i.unit_note ? `<br><span class="csub">${i.unit_note}</span>` : ''}</td>
       <td class="n mono">+${((i.factor - 1) * 100).toFixed(1)}%</td></tr>`).join('')
     + `</tbody>`;
 }

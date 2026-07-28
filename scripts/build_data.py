@@ -22,16 +22,34 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "data", "basket.json")
 # whole wheat bread, not the generic series. Getting this wrong moves the
 # projection by several percent.
 ITEMS = [
-    ("beef",         "beef_price_1lb_imp",         "APU0000703113", "Ground beef, lean and extra lean, per lb", "1 lb, 90% lean, prepackaged", True),
-    ("bread",        "bread_price_loaf_imp",       "APU0000702212", "Bread, whole wheat, per lb",               "1 loaf, whole wheat",         True),
-    ("milk",         "milk_price_imp",             "APU0000709112", "Milk, whole, per gal",                     "1/2 gallon, 1% fat",          False),
-    ("eggs",         "eggs_price_imp",             "APU0000708111", "Eggs, grade A large, per doz",             "1 dozen, large",              True),
-    ("potato",       "potato_price_imp",           "APU0000712112", "Potatoes, white, per lb",                  "1 lb, russet",                True),
-    ("lettuce",      "lettuce_price_imp",          "APU0000712211", "Lettuce, romaine, per lb",                 "1 head, romaine",             True),
-    ("strawberries", "strawberries_price_imp",     "APU0000711415", "Strawberries, dry pint",                   "1 dry pint",                  True),
-    ("tomato",       "tomato_price_imp",           "APU0000712311", "Tomatoes, field grown, per lb",            "1 lb",                        True),
-    ("orange",       "orange_price_imp",           "APU0000711311", "Oranges, navel, per lb",                   "1 lb, navel",                 True),
-    ("banana",       "banana_price_imp",           "APU0000711211", "Bananas, per lb",                          "1 lb",                        True),
+    # (key, survey column, BLS series, series label, spec as the surveyor was asked
+    #  for it, product_match, unit_note)
+    #
+    # product_match is False when the BLS series tracks a DIFFERENT PRODUCT, which
+    # makes its rate of change a substitute rather than a measurement.
+    # unit_note records a difference in the quantity basis. That is less serious:
+    # a rate of change survives a unit difference as long as the product is the
+    # same and package sizes have not shifted.
+    ("beef",         "beef_price_1lb_imp",     "APU0000703113", "Ground beef, lean and extra lean, per lb",
+     "prepackaged 1 lb, 90% lean ground beef", True,  ""),
+    ("bread",        "bread_price_loaf_imp",   "APU0000702212", "Bread, whole wheat, per lb",
+     "1 loaf of whole wheat bread",            True,  "survey priced a loaf, BLS series is per lb"),
+    ("milk",         "milk_price_imp",         "APU0000709112", "Milk, whole, per gal",
+     "1/2 gallon of 1% fat milk",              False, "BLS publishes no low fat series; whole milk stands in"),
+    ("eggs",         "eggs_price_imp",         "APU0000708111", "Eggs, grade A large, per doz",
+     "1 dozen large eggs",                     True,  ""),
+    ("potato",       "potato_price_imp",       "APU0000712112", "Potatoes, white, per lb",
+     "1 lb of russet potatoes",                True,  ""),
+    ("lettuce",      "lettuce_price_imp",      "APU0000712211", "Lettuce, romaine, per lb",
+     "1 head of romaine lettuce",              True,  "survey priced a head, BLS series is per lb"),
+    ("strawberries", "strawberries_price_imp", "APU0000711415", "Strawberries, dry pint",
+     "1 lb container of strawberries",         True,  "survey priced a 1 lb container, BLS series is a dry pint (~12 oz)"),
+    ("tomato",       "tomato_price_imp",       "APU0000712311", "Tomatoes, field grown, per lb",
+     "1 lb of vine tomatoes",                  False, "survey priced vine tomatoes, BLS series is field grown"),
+    ("orange",       "orange_price_imp",       "APU0000711311", "Oranges, navel, per lb",
+     "1 lb of navel oranges",                  True,  ""),
+    ("banana",       "banana_price_imp",       "APU0000711211", "Bananas, per lb",
+     "1 lb of bananas",                        True,  ""),
 ]
 # Survey ran March-August 2019. The inflation base must be that window, not the
 # calendar year, or the factor is measured from the wrong starting point.
@@ -89,7 +107,7 @@ def main():
             continue
         prices, proj = {}, {}
         ok = True
-        for key, col, series, _label, _spec, _match in ITEMS:
+        for key, col, series, _label, _spec, _pm, _un in ITEMS:
             try:
                 v = float(r[col])
             except (ValueError, KeyError):
@@ -118,8 +136,8 @@ def main():
         "items": [{"key": k, "spec": spec, "series": sid, "series_label": lab,
                    "factor": fac[sid]["factor"], "base_2019": fac[sid]["base_2019"],
                    "latest": fac[sid]["latest"], "latest_period": fac[sid]["latest_period"],
-                   "spec_match": match}
-                  for k, _c, sid, lab, spec, match in ITEMS],
+                   "product_match": pm, "unit_note": un, "spec_match": pm and not un}
+                  for k, _c, sid, lab, spec, pm, un in ITEMS],
         "summary": {
             "b19": {"min": b19[0], "median": round(statistics.median(b19), 2), "max": b19[-1]},
             "b26": {"min": b26[0], "median": round(statistics.median(b26), 2), "max": b26[-1]},

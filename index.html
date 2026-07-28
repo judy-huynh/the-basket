@@ -7,13 +7,13 @@
 <meta name="description" content="Store-level grocery basket prices for 163 New York City supermarkets, measured in 2019 and projected forward with official BLS price data.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129506;</text></svg>">
 <link rel="stylesheet" href="src/vendor/maplibre-gl.css">
-<link rel="stylesheet" href="src/styles.css?v=20260726124337">
+<link rel="stylesheet" href="src/styles.css?v=20260727225049">
 </head>
 <body>
 <header><div class="hd">
   <span class="wm">The Basket</span>
   <span class="tag">10 groceries, 163 New York City supermarkets</span>
-  <nav><a href="#method">Method</a><a href="#limits">Limits</a><a href="#data">Data</a></nav>
+  <nav><a href="#method">Method</a><a href="#limits">Limits</a><a href="#data">Data</a><a href="collect/"><b>Price a store</b></a></nav>
 </div></header>
 
 <div class="wrap">
@@ -71,6 +71,7 @@
       <div>
         <h3 style="font-size:15px;margin-bottom:8px">Item specifications and factors</h3>
         <div class="scroll"><table id="items"></table></div>
+        <p class="csub" style="margin-top:8px">&dagger; matched to a different product. * same product, different unit basis.</p>
       </div>
     </div>
   </section>
@@ -83,9 +84,17 @@
       <li><b>163 stores out of 11,472</b> licensed food retailers in the city. Whole neighborhoods have no dot.</li>
       <li><b>Bodegas and delis are excluded</b> entirely, and many New Yorkers shop in them.</li>
       <li><b>The projection assumes every store raised prices at the national rate</b> for each item. That is certainly false at the individual store level. It is a comparison baseline, not a forecast.</li>
-      <li><b>One item is not spec matched.</b> The survey priced 1% milk by the half gallon; BLS publishes no low fat series, so whole milk per gallon stands in for the rate of change.</li>
+      <li><b>Two items are matched to a different product.</b> Marked &dagger; in the table above. The survey priced 1% milk, and BLS publishes no low fat series, so whole milk stands in. The survey priced vine tomatoes, and the BLS series is field grown. For those two the projected rate is a substitute, not a measurement.</li>
+      <li><b>Three more differ in unit basis.</b> Marked * above. Bread was priced by the loaf against a per pound series, romaine by the head against per pound, and strawberries by the 1 lb container against a dry pint of about 12 oz. A rate of change mostly survives a unit difference, but it is not nothing.</li>
       <li><b>Three items are not comparable across stores.</b> Where the preferred product was unavailable, surveyors recorded an alternative. That happened for 94% of orange records, 23% of lettuce and 18% of tomato, so per-item comparisons for those three mix different products.</li>
     </ul>
+  </section>
+
+  <section class="doc" id="contribute">
+    <h2>Help re-measure it</h2>
+    <p class="sub">Every price here traces back to one week of fieldwork in 2019. The projection exists only because nobody has been back. If you shop somewhere on this map, or somewhere that should be, you can price the same ten items in about ten minutes.</p>
+    <p class="sub">The field sheet uses the survey's own wording, so what you record is comparable to the baseline rather than a separate pile of numbers. Nothing is uploaded and no account is needed. It saves as you go and you export a file at the end.</p>
+    <a class="dl" href="collect/">Open the field sheet</a>
   </section>
 
   <section class="doc" id="data">
@@ -106,6 +115,6 @@
 </div></footer>
 
 <script src="src/vendor/maplibre-gl.js"></script>
-<script src="src/app.js?v=20260726124337"></script>
+<script src="src/app.js?v=20260727225049"></script>
 </body>
 </html>

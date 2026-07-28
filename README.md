@@ -72,6 +72,11 @@ $26.54. At one basket a week that is **$984 a year in 2019 and $1,380 now**.
 - Three items mix products across stores. Where the preferred item was
   unavailable the surveyor recorded an alternative: 94% of orange records, 23%
   of lettuce, 18% of tomato. Per-item comparison for those three is unreliable.
+- **Two items are projected using a different product.** Milk was priced at 1%
+  and BLS publishes no low fat series, so whole milk stands in. Tomatoes were
+  priced on the vine and the BLS series is field grown. Three more items match on
+  product but differ in unit basis: bread (loaf against per lb), romaine (head
+  against per lb) and strawberries (1 lb container against a dry pint).
 
 ## Rebuild it
 
