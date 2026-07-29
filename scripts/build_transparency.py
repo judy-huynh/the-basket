@@ -53,6 +53,29 @@ def pearson(a, b):
     return round(num / den, 4) if den else 0.0
 
 
+def write_if_changed(doc, path):
+    """Only rewrite when something other than the timestamp moved.
+
+    Without this every rebuild rewrites the file with a new `generated` date, so
+    git shows a diff and any drift check reports a change that is not one. The
+    file then stops being a signal. Now a clean `git status` after a rebuild
+    means the upstream data genuinely has not moved.
+    """
+    import json as _json, os as _os
+    if _os.path.exists(path):
+        try:
+            old = _json.load(open(path))
+            a = {k: v for k, v in old.items() if k != "generated"}
+            b = {k: v for k, v in doc.items() if k != "generated"}
+            if a == b:
+                return False
+        except (ValueError, OSError):
+            pass
+    with open(path, "w") as f:
+        _json.dump(doc, f, separators=(",", ":"))
+    return True
+
+
 def main():
     stores = json.loads(fetch(STORES))
     counts = collections.Counter(normalise(s.get("dba_name")) for s in stores)
@@ -122,10 +145,10 @@ def main():
         "areas": areas,
     }
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    json.dump(doc, open(OUT, "w"), separators=(",", ":"))
+    changed = write_if_changed(doc, OUT)
 
     c = doc["citywide"]
-    print(f"wrote {OUT}")
+    print(f"{'wrote' if changed else 'unchanged'} {OUT}")
     print(f"  {c['retailers']} retailers, {c['chain_share']*100:.1f}% belong to a chain of {CHAIN_MIN}+")
     print(f"  {c['single_location_share_of_stores']*100:.1f}% carry a name used at exactly one location")
     print(f"  {len(areas)} ZIPs analysed")

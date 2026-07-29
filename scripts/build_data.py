@@ -94,6 +94,29 @@ def bls_factors():
     return out
 
 
+def write_if_changed(doc, path):
+    """Only rewrite when something other than the timestamp moved.
+
+    Without this every rebuild rewrites the file with a new `generated` date, so
+    git shows a diff and any drift check reports a change that is not one. The
+    file then stops being a signal. Now a clean `git status` after a rebuild
+    means the upstream data genuinely has not moved.
+    """
+    import json as _json, os as _os
+    if _os.path.exists(path):
+        try:
+            old = _json.load(open(path))
+            a = {k: v for k, v in old.items() if k != "generated"}
+            b = {k: v for k, v in doc.items() if k != "generated"}
+            if a == b:
+                return False
+        except (ValueError, OSError):
+            pass
+    with open(path, "w") as f:
+        _json.dump(doc, f, separators=(",", ":"))
+    return True
+
+
 def main():
     rows = list(csv.DictReader(io.StringIO(fetch(SURVEY).decode("utf-8-sig"))))
     fac = bls_factors()
@@ -145,9 +168,8 @@ def main():
         "stores": stores,
     }
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    with open(OUT, "w") as f:
-        json.dump(doc, f, separators=(",", ":"))
-    print(f"wrote {OUT}")
+    changed = write_if_changed(doc, OUT)
+    print(f"{'wrote' if changed else 'unchanged'} {OUT}")
     print(f"  {len(stores)} stores, {dropped} dropped")
     print(f"  2019   min ${doc['summary']['b19']['min']}  median ${doc['summary']['b19']['median']}  max ${doc['summary']['b19']['max']}")
     print(f"  2026*  min ${doc['summary']['b26']['min']}  median ${doc['summary']['b26']['median']}  max ${doc['summary']['b26']['max']}")
